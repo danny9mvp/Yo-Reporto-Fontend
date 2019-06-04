@@ -1,3 +1,34 @@
-<p>
-  Hola {{nick}}
-</p>
+<div class="container">
+	<div class="row">
+		<p>Bienvenido {{nick}}</p>
+		<div class="card-body">
+			<form [formGroup]="formReporte" (ngSubmit)="onSubmit()" class="form-horizontal">
+				<div class="form-group">			            
+			            <input type="text" formControlName="titulo" class="form-control" required placeholder="Título"/>
+			        </div>
+			        <div class="form-group">			        	
+			            <textarea cols="5" formControlName="descripcion" class="form-control" required placeholder="Descripción"></textarea>
+			        </div>
+			        <div class="form-group">
+			        	<input type="file" class="file-input" formControlName="foto" (change)="onFileChange($event)"/>			        	
+			        </div>
+			        <button type="submit" [disabled]="!formReporte.valid" class="btn btn-primary">Crear reporte</button>
+			</form>
+		</div>
+		<div class="col col-lg-auto col-md-auto col-sm-auto" *ngIf="reportes != undefined">
+			<div class="card" *ngFor="let reporte of reportes">
+				<div class="card-body">
+					<img class="card-img-top" [src]="reporte.foto" alt="Foto reporte"/>
+					<h5 class="card-title">{{reporte.titulo}}</h5>
+					<p>Publicado: {{reporte.fecha}}</p>
+					<span *ngIf="reporte.estado === 'En espera'" class="badge badge-primary">Estado: {{reporte.estado}}</span>
+					<span *ngIf="reporte.estado === 'En revisión'"class="badge badge-warning">Estado: {{reporte.estado}}</span>
+					<span *ngIf="reporte.estado === 'Solucionado'"class="badge badge-success">Estado: {{reporte.estado}}</span>		
+					<p class="card-text">						
+						{{reporte.descripcion}}
+					</p>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

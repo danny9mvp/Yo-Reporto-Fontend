@@ -23,11 +23,10 @@ export class HomeComponent implements OnInit {
 
   onSubmit(){    
     console.log(this.foto);    
-    this.imgUrService.postImgUr(this.foto).subscribe(data=>{
-      console.log(data);      
+    this.imgUrService.postImgUr(this.foto).subscribe(data=>{      
       var reporte = {
         titulo:this.formReporte.controls['titulo'].value, descripcion:this.formReporte.controls['descripcion'].value,
-        usuario:this.nick, fecha:new Date().toUTCString(), estado: 'En espera', ubicacion: 1,foto: data.data.link
+        usuario:this.nick, fecha:new Date().toUTCString(), estado: 'En espera', ubicacion: 1,foto: data[0].link
       };
       this.reporteService.crearReporte(reporte).subscribe(data=>{
         console.log(data);
